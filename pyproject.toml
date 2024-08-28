@@ -2,7 +2,7 @@
 name = "cooking-core"
 version = "0.1.0"
 description = ""
-authors = ["bucky <buckyroberts@gmail.com>"]
+authors = ["parvez <parvezhossen81@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "cooking_core"}]
