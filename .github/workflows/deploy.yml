@@ -48,4 +48,4 @@ jobs:
         
     - name: Run Deploy
       run: |
-          ssh target "cd /root/zCICD/Django_CICD/ && git pull &&  make migrate && make runserver"
+          ssh target "cd /root/zCICD/Django_CICD/ && git pull &&  make migrate"
