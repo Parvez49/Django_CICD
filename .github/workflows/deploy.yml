@@ -48,4 +48,4 @@ jobs:
         
     - name: Run Deploy
       run: |
-          ssh target "cd Cooking-Core/ &&  make migrate"
+          ssh target "cd /root/zCICD/Django_CICD/ && git pull &&  make migrate && make runserver"
