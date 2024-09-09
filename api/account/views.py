@@ -5,13 +5,19 @@ from django.contrib.auth import authenticate
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 
 # Create your views here.
 
 from .models import User
 from .serializers import UserSerializer, LoginSerializer
 
+class HelloWorldAPIView(APIView):
+    permission_classes = [AllowAny]
 
+    def get(self,request):
+        return Response({"msg":"Hello-World"})
+    
 class UserLoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
     permission_classes = [AllowAny]
