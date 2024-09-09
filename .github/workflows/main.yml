@@ -41,4 +41,4 @@ jobs:
         
         - name: Run Deploy
           run: |
-            ssh target "cd /root/zCICD/lovetamin/ && make gunicorn_kill && git pull && make migrate && make gunicorn"
+            ssh target "cd /root/zCICD/Django_CICD/Django_CICD/ && make gunicorn_kill && git pull && make migrate && make gunicorn"
