@@ -1,0 +1,47 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container">
+    <div>
+        <h1> Search user page </h1><br/>
+        <form method="POST">
+            {% csrf_token %} 
+            <input type="input" class="form-control" placeholder="Search Posts" name="search_user">
+            <br/>
+            <button type="submit" class="btn btn-secondary">Search Post</button>
+        </form>
+        <br/><br/>
+        {% if search_user %}
+        <h3>Search for: "{{ search_user }}"</h3>
+        <br/>
+        {% endif %}
+        <!--<h3>Search result:</h3> <br/><br/>-->
+        {% if users %} 
+            {% for user in users %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="{{ user.profile.profile_image.url }}" class="img-fluid rounded-start" alt="Profile Image" width=200 height=200><br/>
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.username }}</h5>
+                            <p class="card-text"><a href="{% url 'profile' user.id %}"> @{{ user.username|lower }}</a></p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated: {{ user.profile.date_modified }}</small></p>
+                        </div>
+                        {{ user.post.body }}
+                        <br/>
+                        {{ user.post.user }}
+                        <br/>
+                        {{ user.post.created_at }}
+                    </div>
+                </div><br/>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3>No user found</h3>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

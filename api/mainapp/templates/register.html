@@ -1,0 +1,33 @@
+{% extends 'base-login.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3" style="background-image: url(../../media/loginImage.png); background-repeat: no-repeat; background-size: cover; height: 100vh;">
+  <img src="../../media/lovetaminlogo.png" alt="" style="margin-left: 40px; padding-top: 54px;"/>
+  <!-- <h1 class="text-center text-white pt-2">Login</h1> -->
+
+
+  <br /><br />
+<h2 class="text-white text-center fw-medium mb-2" style="padding-top: 20px;">Sign Up to <span style="letter-spacing: 3px;">LOVETAMIN</span></h2>
+<br/>
+
+<form method="POST" accept="" class="mx-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+<br/>
+  
+    <button type="submit" class="w-100 rounded-pill py-2 text-white"  style="background: #cb445c; border: none;">Register</button>
+<!-- <button type="submit" class="btn btn-outline-secondary w-100 mt-2 rounded-pill py-2">
+      Sign Up with Google <i class="bi bi-google"></i>
+    </button>
+    <button type="submit" class="btn btn-outline-secondary w-100 mt-2 rounded-pill py-2">
+      Sign Up with Apple <i class="bi bi-apple"></i>
+    </button> -->
+    <p class="text-center mt-3 text-white">
+      Already have an account?
+      <span class="text-primary hover-underline"
+        ><a  href="{% url 'login' %}">Log In</a></span
+      >
+    </p>
+</div>
+    
+{% endblock %}

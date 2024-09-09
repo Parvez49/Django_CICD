@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container" style="padding-top: 65px">
+  <div>
+    <!-- <h1> Search post page </h1><br/> -->
+    <form method="POST" class="pt-3">
+      {% csrf_token %}
+      <input
+        type="input"
+        class="form-control rounded-pill"
+        placeholder="Search Posts"
+        name="search" />
+      <div class="d-flex justify-content-end">
+        <button
+          type="submit"
+          class="text-white rounded-pill py-1 px-4 mt-2"
+          style="
+            background-color: #cb445c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+          ">
+          Find
+        </button>
+      </div>
+    </form>
+    <br />
+    {% if search %}
+    <h5>Search for: "{{ search }}"</h5>
+    <br />
+    {% endif %}
+    <!--<h3>Search result:</h3> <br/><br/>-->
+    {% if posts %} {% for post in posts %}
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <img
+            src="{{ user.profile.profile_image.url }}"
+            class="img-fluid"
+            style="border: 1px solid #da4b65; border-radius: 100%"
+            alt="Profile Image"
+            width="200"
+            height="200" />
+        </div>
+        <div class="col-8" style="padding-left: 0px">
+          <p style="font-size: 18px; font-weight: 700; margin-bottom: 0">
+            {{ post.user.username }}
+            <span style="color: #989898; font-weight: 400; font-size: 15px"
+              ><i class="bi bi-dot"></i>{{ post.created_at }}</span
+            >
+          </p>
+          <div class="mt-1">{{ post.body }}</div>
+
+          <br />
+        </div>
+      </div>
+      <br />
+    </div>
+    {% endfor %} {% else %} No posts found {% endif %}
+  </div>
+</div>
+
+{% endblock %}

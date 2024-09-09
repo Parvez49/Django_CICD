@@ -1,0 +1,296 @@
+{% extends 'base.html' %} {% block content %} {% if profile %}
+<div class="container text-center">
+  <div class="row">
+    <div style="margin-top: 61px;">
+      <div class="row d-flex justify-content-center pt-4">
+        {% if profile.profile_image %}
+        <img
+          src="{{ profile.profile_image.url }}"
+          class="img-fluid"
+          alt="Responsive image"
+          style="
+            border: 1px solid #da4b65;
+            width: 80px;
+            height: 80px;
+            border-radius: 100%;
+          " />
+        {% endif %}
+      </div>
+      <br />
+      <h3 class="mb-0">{{ profile.user.username|upper }}</h3>
+      <div>
+        <!-- {% if profile.profile_bio %}
+        <p>{{ profile.profile_bio }}</p>
+        {% endif %} -->
+
+        {% if profile.facebook_link %}
+        <a href="{{ profile.facebook_link }}" target="new"
+          ><i class="bi bi-facebook"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp; {% if profile.linked_link %}
+        <a href="{{ profile.linked_link }}" target="new"
+          ><i class="bi bi-linkedin"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp; {% if profile.instagram_link %}
+        <a href="{{ profile.linked_link }}" target="new"
+          ><i class="bi bi-instagram"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp;
+
+        <br /><br />
+      </div>
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="post-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#post"
+            type="button"
+            role="tab"
+            aria-controls="post"
+            style="color: #cb445c"
+            aria-selected="true">
+            Post
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="bio-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#bio"
+            type="button"
+            role="tab"
+            aria-controls="bio"
+            style="color: #cb445c"
+            aria-selected="false">
+            Bio
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="follows-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#follows"
+            type="button"
+            role="tab"
+            aria-controls="follows"
+            style="color: #cb445c"
+            aria-selected="false">
+            Follows
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="followed-by-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#followed-by"
+            type="button"
+            role="tab"
+            aria-controls="followed-by"
+            style="color: #cb445c"
+            aria-selected="false">
+            Followed By
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab content -->
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="post"
+          role="tabpanel"
+          aria-labelledby="post-tab">
+          <div>
+            {% if posts %} {% for post in posts %}
+            <div
+              class="p-3"
+              style="
+                border-bottom: 1px solid #f5c5d8;
+                padding-bottom: 3px;
+                margin-bottom: 3px;
+              "
+              role="alert">
+              <div class="row">
+                <div class="col-2">
+                  <img
+                    src="{{ profile.profile_image.url }}"
+                    alt="Profile Image"
+                    class="img-fluid rounded-circle"
+                    alt="Profile Image"
+                    style="border: 1px solid red" />
+                </div>
+                <div class="col-8" style="padding-left: 0">
+                  <p
+                    style="font-size: 18px; font-weight: 700; margin-bottom: 0">
+                    {{ post.user.username }}
+                    <span
+                      style="color: #989898; font-weight: 400; font-size: 15px"
+                      ><i class="bi bi-dot"></i>{{ post.created_at }}</span
+                    >
+                  </p>
+                  <p class="mt-1" style="text-align: left">{{ post.body }}</p>
+
+                  <small class="text-muted">
+                    <!-- {{ post.created_at }} by @{{ post.user.username }}&nbsp; -->
+                    {% if request.user.username == post.user.username %}
+                    <a href="{% url 'delete_post' post.id %}">
+                      <i class="bi bi-trash"></i
+                    ></a>
+                    {% endif %} {% if request.user.username == post.user.username %}
+                    <a href="{% url 'edit_post' post.id %}">
+                      <i class="bi bi-pencil-square"></i
+                    ></a>
+                    {% endif %}
+                  </small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <!--For like-->
+                  {% if user in post.likes.all %}
+                  <a href="{% url 'post_like' post.id %}"
+                    ><i class="bi bi-hand-thumbs-down"></i>
+                    <!--Unlike-->
+                  </a>
+                  {% else %}
+                  <a href="{% url 'post_like' post.id %}"
+                    ><i class="bi bi-hand-thumbs-up"></i>
+                    <!--Like--></a
+                  >
+                  {% endif %}
+                </div>
+                <div class="col-4">
+                  <!--for love or hate-->
+                  {% if user in post.loves.all %}
+                  <a href="{% url 'post_love' post.id %}"
+                    ><i class="bi bi-heartbreak" style="color: red"></i>
+                    <!--Hate--></a
+                  >
+                  {% else %}
+                  <a href="{% url 'post_love' post.id %}"
+                    ><i class="bi bi-heart" style="color: red"></i>
+                    <!--Love--></a
+                  >
+                  {% endif %}
+                </div>
+
+                <div class="col-4">
+                  <a href="#"
+                    ><i class="bi bi-chat-left-dots"></i>
+                    <!--Share--></a
+                  >
+                </div>
+              </div>
+            </div>
+
+            {% endfor %} {% endif %}
+          </div>
+        </div>
+        <div
+          class="tab-pane fade show active"
+          id="bio"
+          role="tabpanel"
+          aria-labelledby="bio-tab">
+          {% if profile.profile_bio %}
+          <p class="pt-4">{{ profile.profile_bio }}</p>
+          {% endif %}
+        </div>
+        <div
+          class="tab-pane fade"
+          id="follows"
+          role="tabpanel"
+          aria-labelledby="follows-tab">
+          <div class="card mt-3">
+            <!-- <div class="card-header">
+              <strong>Follows</strong>
+            </div> -->
+            <div class="card-body">
+              <p class="card-text">
+                {% for following in profile.follows.all|slice:3 %}
+                <a href="{% url 'profile' following.user.id %}">
+                  @{{ following }}</a
+                >&nbsp;
+                <a href="{% url 'unfollow' following.user.id %}"
+                  ><i class="bi bi-node-minus" style="color: firebrick"></i></a
+                ><br />
+                {% endfor %}
+              </p>
+            </div>
+            <div class="card-footer">
+              <a
+                href="{% url 'follows' profile.user.id %}"
+                class="btn btn-sm btn-outline-secondary"
+                >See all</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="followed-by"
+          role="tabpanel"
+          aria-labelledby="followed-by-tab">
+          <div class="card mt-3">
+            <div class="card-body">
+              <p class="card-text">
+                {% for following in profile.followed_by.all|slice:3 %}
+                <a href="{% url 'profile' following.user.id %}">
+                  @{{ following }}</a
+                >&nbsp; {% if following in profile.follows.all %}
+                <a href="{% url 'unfollow' following.user.id %}"
+                  ><i class="bi bi-node-minus" style="color: firebrick"></i></a
+                ><br />
+                {% else %}
+                <a href="{% url 'follow' following.user.id %}"
+                  ><i class="bi bi-node-plus" style="color: green"></i></a
+                ><br />
+                {% endif %} {% endfor %}
+              </p>
+            </div>
+            <div class="card-footer">
+              <a
+                href="{% url 'followers' profile.user.id %}"
+                class="btn btn-sm btn-outline-secondary"
+                >See all</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form method="POST" style="margin-top:9px">
+        {% csrf_token %} {% if profile in user.profile.follows.all %}
+        <button
+          type="submit"
+          class="btn btn-outline-danger"
+          name="follow"
+          value="unfollow">
+          Unfollow {{ profile.user.username }}
+        </button>
+        {% else %}
+        <button
+          type="submit"
+          class="btn btn-outline-success"
+          name="follow"
+          value="follow">
+          Follow {{ profile.user.username }}
+        </button>
+        {% endif %}
+      </form>
+     <br/>
+      <!--{% if request.user.id == profile.user.id %}
+      <a href="{% url 'update_profile' %}" class="btn btn-outline-primary"
+        >Update Profile</a
+      >
+      {% endif %}-->
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %}

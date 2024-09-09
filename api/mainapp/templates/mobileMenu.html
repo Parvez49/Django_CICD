@@ -1,0 +1,91 @@
+<br />
+<br />
+
+<nav
+  class="mobile-nav d-flex justify-content-around align-items-center px-2"
+  style="
+    height: 58px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 2px solid #f5c5d8;
+    background: #fcf3fe;
+    box-shadow: -5px 5px -5px #dc354578 !important;
+  ">
+  <a
+    href="{% url 'home' %}"
+    class="bloc-icon"
+    style="
+      font-size: 20px;
+      color: #cb445c;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    ">
+    <i class="bi bi-house" style="font-size: 20px; color: #cb445c"></i>
+    <span style="font-size: 14px; margin-top: -6px">Home</span>
+  </a>
+  {% if user.is_authenticated %}
+  <a
+    href="{% url 'profile_list' %}"
+    class="bloc-icon"
+    style="
+      font-size: 20px;
+      color: #cb445c;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    ">
+    <i class="bi bi-search-heart" style="font-size: 20px; color: #cb445c"></i>
+    <span style="font-size: 14px; margin-top: -6px">Explore</span>
+  </a>
+  <a
+    href="{% url 'profile_list' %}"
+    style="
+      font-size: 20px;
+      color: #cb445c;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    ">
+    <i class="bi bi-people" style="font-size: 20px; color: #cb445c"></i>
+    <span style="font-size: 14px; margin-top: -6px">Match</span>
+  </a>
+  <a
+    href="{% url 'profile' request.user.id %}"
+    style="
+      font-size: 20px;
+      color: #cb445c;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    ">
+    <i class="bi bi-chat" style="font-size: 20px; color: #cb445c"></i>
+    <span style="font-size: 14px; margin-top: -6px">Chat</span>
+  </a>
+  <!-- <a
+    href="{% url 'logout' %}"
+    style="
+      font-size: 20px;
+      color: #cb445c;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    ">
+    <i
+      class="bi bi-box-arrow-in-right"
+      style="font-size: 20px; color: #cb445c"></i>
+    <span style="font-size: 14px; margin-top: -6px">Logout</span>
+  </a> -->
+  {% endif %}
+</nav>

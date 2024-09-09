@@ -1,0 +1,333 @@
+<!-- home.html -->
+
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="">
+    <div>
+      <div>
+        {% if form %}
+        <form
+          method="POST"
+          class="d-flex gap-2"
+          style="height: 40px"
+          enctype="multipart/form-data">
+          {% csrf_token %} {{ form.as_p }}
+
+          <button type="submit" class="btn btn-secondary">Post</button>
+        </form>
+        {% endif %}
+        <br />
+      </div>
+      {% for post in posts %}
+
+      <div class="alert alert-light" role="alert">
+        <div class="container mt-2">
+          <div class="row">
+            <div class="col-2">
+              <img
+                src="{{ post.user.profile.profile_image.url }}"
+                class="img-fluid rounded-start"
+                alt="Profile Image"
+                width="200"
+                height="200" />
+            </div>
+            <div class="col-10">
+              {{ post.body }} <br />
+              <small class="text-muted">
+                <!--{{ post.created_at }} by @{{ post.user.username }}-->
+                <br />
+                {% if post.post_image %}
+                <img src="{{ post.post_image.url }}" height="500" width="500" />
+                {% endif %}
+                <br />
+                {{ post.created_at }} by @{{ post.user.username }} <br />
+                <br /><br />
+                <i class="bi bi-hand-thumbs-up"> {{ post.number_of_likes }}</i>
+                <i class="bi bi-heart"> {{ post.number_of_loves }}</i>
+                <i class="bi bi-chat-left-dots"> {{post.}} </i> <br />
+                <br />
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col-3">
+                      <!--for like or unlike-->
+                      {% if user in post.likes.all %}
+                      <a href="{% url 'post_like' post.id %}"
+                        ><i class="bi bi-hand-thumbs-down"></i>
+                        <!--Unlike-->
+                      </a>
+                      {% else %}
+                      <a href="{% url 'post_like' post.id %}"
+                        ><i class="bi bi-hand-thumbs-up"></i>
+                        <!--Like--></a
+                      >
+                      {% endif %}
+                    </div>
+                    <div class="col-3">
+                      <!--for love or hate-->
+                      {% if user in post.loves.all %}
+                      <a href="{% url 'post_love' post.id %}"
+                        ><i class="bi bi-heartbreak" style="color: red"></i>
+                        <!--Hate--></a
+                      >
+                      {% else %}
+                      <a href="{% url 'post_love' post.id %}"
+                        ><i class="bi bi-heart" style="color: red"></i>
+                        <!--Love--></a
+                      >
+                      {% endif %}
+                    </div>
+                    <div class="col-3">
+                      <a href="{% url 'post_share' post.id %}"
+                        ><i class="bi bi-share"></i>
+                        <!--Comment-->{{ post.id }}</a
+                      >
+                    </div>
+                    <div class="col-3">
+                      <a href="{% url 'post_comments' post.id %}"
+                        ><i class="bi bi-chat-left-dots"></i>
+                        <!--Share--></a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% extends 'base.html' %} {% block content %} {% if profile %}
+
+<div class="container text-center">
+  <div class="row">
+    <div>
+      <br />
+      {% if posts %} {% for post in posts %}
+      <div class="alert alert-secondary" role="alert">
+        <div class="container">
+          <div class="row">
+            <div>
+              <img
+                src="{{ profile.profile_image.url }}"
+                class="img-fluid"
+                alt="Profile Image"
+                width="150"
+                height="150" />
+            </div>
+            <div>
+              {{ post.body }}
+              <small class="text-muted">
+                {{ post.created_at }} by @{{ post.user.username }}&nbsp; {% if
+                request.user.username == post.user.username %}
+                <a href="{% url 'delete_post' post.id %}">
+                  <i class="bi bi-trash"></i
+                ></a>
+                {% endif %} {% if request.user.username == post.user.username %}
+                <a href="{% url 'edit_post' post.id %}">
+                  <i class="bi bi-pencil-square"></i
+                ></a>
+                {% endif %}
+              </small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3">
+              <!--For like-->
+              {% if user in post.likes.all %}
+              <a href="{% url 'post_like' post.id %}"
+                ><i class="bi bi-hand-thumbs-down"></i>
+                <!--Unlike-->
+              </a>
+              {% else %}
+              <a href="{% url 'post_like' post.id %}"
+                ><i class="bi bi-hand-thumbs-up"></i>
+                <!--Like--></a
+              >
+              {% endif %}
+            </div>
+            <div class="col-3">
+              <!--for love or hate-->
+              {% if user in post.loves.all %}
+              <a href="{% url 'post_love' post.id %}"
+                ><i class="bi bi-heartbreak" style="color: red"></i>
+                <!--Hate--></a
+              >
+              {% else %}
+              <a href="{% url 'post_love' post.id %}"
+                ><i class="bi bi-heart" style="color: red"></i>
+                <!--Love--></a
+              >
+              {% endif %}
+            </div>
+            <div class="col-3">
+              <a href="{% url 'post_share' post.id %}"
+                ><i class="bi bi-share"></i>
+                <!--Comment-->{{ post.id }}</a
+              >
+            </div>
+            <div class="col-3">
+              <a href="#"
+                ><i class="bi bi-chat-left-dots"></i>
+                <!--Share--></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+      {% endfor %} {% endif %}
+    </div>
+    <div>
+      <div class="row d-flex justify-content-center">
+        {% if profile.profile_image %}
+        <img
+          src="{{ profile.profile_image.url }}"
+          class="img-fluid"
+          alt="Responsive image"
+          style="
+            border: 1px solid #da4b65;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+          " />
+        {% endif %}
+      </div>
+      <br />
+      <h3 class="mb-0">{{ profile.user.username|upper }}</h3>
+      <div>
+        {% if profile.profile_bio %}
+        <p>{{ profile.profile_bio }}</p>
+        {% endif %} {% if profile.facebook_link %}
+        <a href="{{ profile.facebook_link }}" target="new"
+          ><i class="bi bi-facebook"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp; {% if profile.linked_link %}
+        <a href="{{ profile.linked_link }}" target="new"
+          ><i class="bi bi-linkedin"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp; {% if profile.instagram_link %}
+        <a href="{{ profile.linked_link }}" target="new"
+          ><i class="bi bi-instagram"></i
+        ></a>
+        {% endif %} &nbsp;&nbsp;
+
+        <br /><br />
+      </div>
+
+      <ul class="nav mx-auto gap-5">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            style="
+              color: #cb445c;
+              font-weight: 600;
+              border-bottom: 2px solid #cb445c;
+            "
+            aria-current="page"
+            href="#"
+            >Bio</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: #cb445c; font-weight: 600" href="#"
+            >Follows</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: #cb445c; font-weight: 600" href="#"
+            >Followed By</a
+          >
+        </li>
+      </ul>
+
+      <div class="card">
+        <div class="card-header">
+          <strong>Follows</strong>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            {% for following in profile.follows.all|slice:3 %}
+            <a href="{% url 'profile' following.user.id %}"> @{{ following }}</a
+            >&nbsp;
+            <a href="{% url 'unfollow' following.user.id %}"
+              ><i class="bi bi-node-minus" style="color: firebrick"></i></a
+            ><br />
+            {% endfor %}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a
+            href="{% url 'follows' profile.user.id %}"
+            class="btn btn-sm btn-outline-secondary"
+            >See all</a
+          >
+        </div>
+      </div>
+
+      <br /><br />
+      <div class="card">
+        <div class="card-header">
+          <strong>Followed By</strong>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            {% for following in profile.followed_by.all|slice:3 %}
+            <a href="{% url 'profile' following.user.id %}"> @{{ following }}</a
+            >&nbsp; {% if following in profile.follows.all %}
+            <a href="{% url 'unfollow' following.user.id %}"
+              ><i class="bi bi-node-minus" style="color: firebrick"></i></a
+            ><br />
+            {% else %}
+            <a href="{% url 'follow' following.user.id %}"
+              ><i class="bi bi-node-plus" style="color: green"></i></a
+            ><br />
+            {% endif %} {% endfor %}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a
+            href="{% url 'followers' profile.user.id %}"
+            class="btn btn-sm btn-outline-secondary"
+            >See all</a
+          >
+        </div>
+      </div>
+      <br /><br />
+      <form method="POST">
+        {% csrf_token %} {% if profile in user.profile.follows.all %}
+        <button
+          type="submit"
+          class="btn btn-outline-danger"
+          name="follow"
+          value="unfollow">
+          Unfollow {{ profile.user.username }}
+        </button>
+        {% else %}
+        <button
+          type="submit"
+          class="btn btn-outline-success"
+          name="follow"
+          value="follow">
+          Follow {{ profile.user.username }}
+        </button>
+        {% endif %}
+      </form>
+      <br />
+      {% if request.user.id == profile.user.id %}
+      <a href="{% url 'update_profile' %}" class="btn btn-outline-primary"
+        >Update Profile</a
+      >
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endif %} {% endblock %}

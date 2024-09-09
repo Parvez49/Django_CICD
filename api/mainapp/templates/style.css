@@ -1,0 +1,11 @@
+#id_body {
+  height: 50px !important;
+}
+/* .offcanvas-header {
+  display: flex;
+  flex-direction: row-reverse !important;
+  justify-content: space-between !important;
+} */
+.active{
+  border-bottom: #cb445c
+}

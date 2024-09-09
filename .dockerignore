@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.so
+.idea/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml

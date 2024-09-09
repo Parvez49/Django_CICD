@@ -1,0 +1,173 @@
+<nav
+  class="navbar navbar-expand-lg d-sm-block d-md-none d-lg-flex pb-0"
+  style="
+    background: #f7eaf3;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    box-shadow: rgb(249 177 177 / 24%) 0px 5px 10px;
+    border-bottom: 3px solid #f9d0d052;
+  ">
+  <div class="container-fluid">
+    <!-- <a href="{% url 'search_post' %}">
+        <i class="bi bi-arrow-left" style="color: #cb445c"></i></a> -->
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="../../media/lovetaminlogo.png" alt="logo" width="120" />
+    </a>
+    <div class="d-flex">
+      {% if user.is_authenticated %}
+      <a href="{% url 'search_post' %}">
+        <i class="bi bi-search mx-2" style="color: #cb445c"> </i
+      ></a>
+
+      {% endif %}
+      <div
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight">
+        {% if user.is_authenticated %}
+
+        <a>
+          <!-- {{ request.user.username }} {% if user.profile.profile_image %} -->
+          <i class="bi bi-three-dots-vertical" style="color: #cb445c"></i>
+          {% endif %}
+        </a>
+
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasRight"
+      aria-labelledby="offcanvasRightLabel"
+      style="width: 60%; background: #fcf3fe">
+      <div class="offcanvas-header" style="padding: 3px 0">
+        <button
+          type="button"
+          style="margin: 0"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div
+          id="offcanvasRightLabel"
+          style="display: flex; justify-content: center; margin-top: -10px">
+          {% if user.is_authenticated %}
+          <div>
+            <a class="d-flex justify-content-center align-content-center"
+              ><img
+                src="{{ user.profile.profile_image.url }}"
+                class="rounded-circle"
+                style="border: 1px solid #cb445c"
+                width="50"
+                height="50"
+            /></a>
+            {% endif %}
+            <div class="my-1 text-center" style="font-size: 18px">
+              {{ request.user.username }} {% if user.profile.profile_image %}
+            </div>
+            <p style="font-size: 14px; margin-bottom: 4px; text-align: center">
+              <span>4 Following</span> <span>5 follower</span>
+            </p>
+            <p
+              style="
+                font-size: 14px;
+                margin-top: 0;
+                text-align: center;
+                margin-bottom: 7px;
+              ">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            </p>
+          </div>
+
+          {% endif %}
+        </div>
+        <div
+          class="d-flex justify-content-center align-content-center mx-5"
+          style="
+            border: 1px solid #cb445c;
+            background: #cb445c;
+            color: white;
+            font-size: 14px;
+            padding: 0;
+            border-radius: 3px;
+          ">
+          <a
+            href="{% url 'update_profile' %}"
+            style="text-decoration: none; color: white"
+            >Update Profile</a
+          >
+        </div>
+        {% if user.is_authenticated %}
+        <ul style="list-style-type: none; padding-left: 0; margin-top: 20px">
+          <li>
+            <a
+              style="text-decoration-line: blink; color: #cb445c"
+              href="{% url 'profile' request.user.id %}">
+              <i
+                class="bi bi-person"
+                style="color: #cb445c; font-size: 22px; width: 30px">
+              </i>
+              <span style="font-size: 18px">Profile</span>
+            </a>
+          </li>
+          <li class="my-3">
+            <a
+              href="{% url 'update_preferance' %}"
+              style="text-decoration-line: blink; color: #cb445c">
+              <i
+                class="bi bi-backpack4"
+                style="color: #cb445c; font-size: 22px; width: 30px"></i>
+              <span style="font-size: 18px">Your Preference</span>
+            </a>
+          </li>
+          <li class="my-3">
+            <a
+              href="{% url 'profile_list' %}"
+              style="text-decoration-line: blink; color: #cb445c">
+              <i
+                class="bi bi-list-ul"
+                style="color: #cb445c; font-size: 22px; width: 30px"></i>
+              <span style="font-size: 18px">Profile Lists</span>
+            </a>
+          </li>
+          <li>
+            <a
+              style="text-decoration-line: blink; color: #cb445c"
+              href="{% url 'logout' %}">
+              <i
+                class="bi bi-box-arrow-right"
+                style="color: #cb445c; font-size: 22px; width: 30px"></i>
+              <span style="font-size: 18px">Logout</span>
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!-- <ul class="nav mx-auto gap-5">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        style="
+          color: #cb445c;
+          font-weight: 600;
+          border-bottom: 2px solid #cb445c;
+        "
+        aria-current="page"
+        href="#"
+        >For you</a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" style="color: #cb445c; font-weight: 600" href="#"
+        >Personalize</a
+      >
+    </li>
+  </ul> -->
+</nav>

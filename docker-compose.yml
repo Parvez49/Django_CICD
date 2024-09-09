@@ -1,0 +1,11 @@
+services:
+
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "python api/manage.py makemigrations && python api/manage.py migrate && python api/manage.py runserver 0.0.0.0:8082"
+    volumes:
+      - .:/app
+    ports:
+      - "8082:8082"

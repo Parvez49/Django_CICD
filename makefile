@@ -11,21 +11,32 @@ all: install lint test
 install:
 	$(POETRY) install
 
+# Install from Requirements.txt
+requirements:
+	${POETRY} run pip install -r requirements.txt 
+
 # Run Django migrations
 migrate:
-	$(PYTHON) backend/manage.py migrate
+	$(PYTHON) api/manage.py migrate
 
 # Create Django superuser
 createsuperuser:
-	$(PYTHON) backend/manage.py createsuperuser
+	$(PYTHON) api/manage.py createsuperuser
 
 # Run Django development server
 runserver:
-	$(PYTHON) backend/manage.py runserver 0.0.0.0:9020
+	$(PYTHON) api/manage.py runserver 0.0.0.0:9020
+
+# Gunicorn Production
+gunicorn:
+	poetry run nohup bash api/gunicorn_run.sh > gunicorn.log 2>&1 &
+
+gunicorn_kill:
+	poetry run bash api/gunicorn_kill.sh &
 
 # Run tests
 test:
-	$(PYTHON) backend/manage.py test
+	$(PYTHON) api/manage.py test
 
 # Lint the code
 lint:
@@ -33,8 +44,9 @@ lint:
 
 # Collect static files
 collectstatic:
-	$(PYTHON) backend/manage.py collectstatic --noinput
+	$(PYTHON) api/manage.py collectstatic --noinput
 
 # Clean up generated files
 clean:
 	rm -f *.pyc
+

@@ -1,0 +1,65 @@
+{% extends 'base-login.html' %} {% block content %} {% if user.is_authenticated %}
+<h1>You are already logged In</h1>
+
+{% else %}
+
+<div class="col-md-6 offset-md-3" style="background-image: url(../../media/loginIntro.jpeg); background-repeat: no-repeat; background-size: cover; height: 100vh;">
+  <div class="container">
+
+    <!-- <img src="../../media/lovetaminlogo.png" alt="" /> -->
+  <!-- <h1 class="text-center text-white pt-2">Login</h1> -->
+  <br /><br />
+
+  <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <!-- <div class="mb-3">
+      <label class="form-label text-white">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        name="username"
+        placeholder="Enter your username" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label text-white">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        placeholder="Enter your password" />
+    </div>
+    <button
+      type="submit"
+      class="btn w-100 text-white mt-3"
+      style="background: #cb445c">
+      Submit
+    </button> -->
+    <div class="d-flex justify-content-center align-content-center">
+    <div> 
+      <img src="../../media/logos.png" alt="" class="ms-5"/>
+     <h1 class="text-white fw-semibold text-xl" style="letter-spacing: 5px; font-family: sans-serif;" >LOVETAMIN</h1>
+    </div>
+    </div>
+    
+    <!-- <button type="submit" class="btn btn-outline-secondary w-100 mt-2 text-white">
+      Login with Google <i class="bi bi-google"></i>
+    </button>
+    <button type="submit" class="btn btn-outline-secondary w-100 mt-2 text-white">
+      Login with Apple <i class="bi bi-apple"></i>
+    </button> -->
+    <p class="text-white text-center px-3" style="margin-top: 370px; margin-bottom: 30px;">By Tapping 'Sign in' / 'Create Account'. You Agree To Our 
+      <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Term of Service.</a>
+       Learn How We Process Your Data in Our 
+       <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Privacy Policy</a> and 
+       <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Cookies Policy.</a>
+    </p>
+    <p class="text-center mt-3 text-white rounded-pill py-2 mx-3" style="background: #cb445c">
+      <a href="{% url 'register' %}" class="text-decoration-none text-white fw-semibold" style="font-size: 18px;">Create Account</a>
+    </p>
+    <p class="text-center mt-3 text-white">
+        <a href="{% url 'login' %}" class="text-decoration-none text-white fw-semibold" style="font-size: 18px;">Sign In</a>
+      </p>
+  </form>
+  </div>
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="" style="padding-top: 70px;">
+        <div>
+        <div class="container mt-2" >
+                    <div class="row py-2 bg-body border" style="border-radius: 4px;">
+                        <div class="col-2">
+                            <img src="{{ post.user.profile.profile_image.url }}"
+                                class="img-fluid rounded-circle"
+        alt="Profile Image"
+        style="border: 1px solid #da4b65" />
+                        </div>
+                        <div class="col-10" style="padding-left: 0;">
+                              <p style="font-size: 18px; font-weight: 700; margin-bottom: 0">
+        {{ post.user.username }}
+        <span style="color: #989898; font-weight: 400; font-size: 15px"
+          ><i class="bi bi-dot"></i>{{ post.created_at }}</span
+        >
+      </p>
+                            {{ post.body }} <br />
+                            {% if post.post_image %}
+                                <div class="my-3">
+                                    <!-- <div style="height: 240px; width: 320px; border-radius: 4px;"> <img style="border-radius: 5px; width: 100%; height: 100%; object-fit: fill;" src="{{ comment.comment_image.url }}"></div> -->
+                                    <img
+                                    src="{{ post.post_image.url }}"
+                                    class="h-100 w-100 rounded-2 object-fit-cover" />
+                                </div>
+                                {% endif %}
+                            <small class="text-muted">
+                                <!-- {{ post.created_at }} by @{{ post.user.username }}
+                                <br /><br /> -->
+                                <!-- <i class="bi bi-hand-thumbs-up"> {{ post.number_of_likes }}</i> <i class="bi bi-heart">
+                                    {{ post.number_of_loves }}</i> <i class="bi bi-chat-left-dots"> 0 </i>
+                                <br /><br /> -->
+
+                                <div class="container mt-3">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <!--for like or unlike-->
+                                            {% if user in post.likes.all %}
+                                            <a href="{% url 'post_like' post.id %}"><i
+                                                    class="bi bi-hand-thumbs-down"></i> <!--Unlike--> </a>
+                                            {% else %}
+                                            <a href="{% url 'post_like' post.id %}"><i class="bi bi-hand-thumbs-up"></i>
+                                                <!--Like--></a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-4">
+                                            <!--for love or hate-->
+                                            {% if user in post.loves.all %}
+                                            <a href="{% url 'post_love' post.id %}"><i class="bi bi-heartbreak"
+                                                    style="color: red;"></i> <!--Hate--></a>
+                                            {% else %}
+                                            <a href="{% url 'post_love' post.id %}"><i class="bi bi-heart"
+                                                    style="color: red;"></i> <!--Love--></a>
+                                            {% endif %}
+                                        </div>
+
+                                        
+                                        <div class="col-4" style="color: #437FD6;"><i class="bi bi-chat-left-dots"></i>
+                                                <!--Comment-->{{post.comments.count}}</div>
+                                        <!-- <div class="col-4"><a href="#"><i class="bi bi-share"></i> Share</a>
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            <div>
+
+            {% if commentForm %}
+            <form method="POST" action="{% url 'comment_sent' post.id %}" class="mt-2" style="height: 70px" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ commentForm.as_p }}
+
+                <!-- <div class="bg-red"></div> -->
+
+               <div class="d-flex justify-content-end align-content-center"> <button type="submit" class="py-1 px-2 text-sm" style="background: #cb445c; border: none; color: white; border-radius: 4px">Send Your Comments <i class="bi bi-send" style="color: white;"></i></button> </div>
+            </form>
+            {% endif %}
+            <br />
+        </div>
+            <br/>
+
+            {% if post.comments.all %}
+                {% for comment in post.comments.all %}
+
+                <!--Start card-->
+
+                <div class="card text-bg-light" style="margin-top: 24px;">
+                    <div class="row>">
+                        <div class="card-header">
+                            <img src="{{ comment.user.profile.profile_image.url }}" alt="Profile Image" class="img-thumbnail" width=25 height=25><br.>&nbsp;<b>{{comment.user}}</b><br/>
+                            <small class="text-muted">{{comment.created_at}}</small>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                      <p class="card-text">{{comment.body}}</p>
+                        {% if comment.comment_image %}
+                           <div style="height: 240px; width: 320px; border-radius: 4px;"> <img style="border-radius: 5px; width: 100%; height: 100%; object-fit: fill;" src="{{ comment.comment_image.url }}"></div>
+                        {% endif %}
+                    </div>
+                  </div>
+
+                <!--End card-->
+                {% endfor %}
+            {% else %}
+           <div style="margin-top: 120px;" class="d-flex justify-content-center align-content-center"> No comments found</div>
+            {% endif %} <br/>
+            
+        </div>
+
+          
+    </div>
+</div>
+
+{% endblock %}

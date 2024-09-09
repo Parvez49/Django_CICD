@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3" style="padding-top: 64px;">
+<br/>
+
+  <div class="container">
+    
+    {% if form %}
+    <form
+      method="POST"
+      class="gap-2"
+      style="height: 40px"
+      enctype="multipart/form-data">
+      {% csrf_token %} 
+      {{ form.as_p }}
+      <div class="d-flex justify-content-end align-content-center"><button type="submit" class="d-flex justify-content-center align-content-center gap-1 text-white pt-1" style="background: #cb445c; height: 35px; width: 60px; border: none; border-radius: 5px; width: 100%; ">Post <i class="bi bi-send"></i></button></div>
+    </form>
+    {% endif %}
+    
+  </div>
+
+</div>
+    
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+<h4 class="text-md ms-3 mt-3 mb-3" style="padding-top: 72px">Profile List</h4>
+
+{% if profiles %} {% for profile in profiles %}
+
+<a
+  href="{% url 'profile' profile.user.id %}"
+  class="mb-3 d-flex align-content-center gap-2 border mx-3 rounded-3 p-2 shadow-sm p-3 rounded"
+  style="max-width: 540px; text-decoration: none">
+  <img
+    src="{{ profile.profile_image.url }}"
+    class="img-fluid"
+    alt="Profile Image"
+    style="
+      border: 1px solid #da4b65;
+      height: 50px;
+      width: 50px;
+      border-radius: 100%;
+    " />
+
+  <div class="">
+    <p class="text-md-center mb-0 text-black">
+      {{ profile.user.username }}
+      <!-- <a style="font-size: 12px;" href="{% url 'profile' profile.user.id %}">@{{ profile.user.username|lower }}</a> -->
+    </p>
+    <p class="mb-0">
+      <small class="text-body-secondary">{{ profile.date_modified }}</small>
+    </p>
+    <!-- <p class=""><a href="{% url 'profile' profile.user.id %}"> @{{ profile.user.username|lower }}</a></p>
+        <br /><br /> -->
+  </div>
+</a>
+{% endfor %} {% endif %} {% endblock %}

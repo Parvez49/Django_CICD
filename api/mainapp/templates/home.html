@@ -1,0 +1,143 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="" style="padding-top: 79px !important">
+  <!-- <div>
+        {% if form %}
+        <form
+          method="POST"
+          class="d-flex gap-2"
+          style="height: 40px"
+          enctype="multipart/form-data">
+          {% csrf_token %} {{ form.as_p }}
+
+          <button type="submit" class="btn btn-secondary">Post</button>
+        </form>
+        {% endif %}
+        <br />
+      </div> -->
+
+  {% for post in posts %}
+
+  <!-- <div class="alert alert-light" role="alert" style="border: 1px solid #da4b65"> -->
+  <div
+    class="row py-3"
+    style="
+      border-bottom: 2px solid #f5c5d8;
+      margin-left: 10px;
+      margin-right: 10px;
+    ">
+    <div class="col-2">
+      <img
+        src="{{ post.user.profile.profile_image.url }}"
+        class="img-fluid rounded-circle"
+        alt="Profile Image"
+        style="border: 1px solid #da4b65" />
+    </div>
+    <div class="col-10" style="padding-left: 0">
+      <a
+        href="{% url 'post_comments' post.id %}"
+        style="text-decoration: none; color: black">
+        <p style="font-size: 18px; font-weight: 700; margin-bottom: 0">
+          {{ post.user.username }}
+          <span style="color: #989898; font-weight: 400; font-size: 15px"
+            ><i class="bi bi-dot"></i>{{ post.created_at }}</span
+          >
+        </p>
+        <div class="mt-1">{{ post.body }}</div>
+
+        <!--{{ post.created_at }} by @{{ post.user.username }}-->
+
+        {% if post.post_image %}
+        <div class="my-3">
+          <img
+            src="{{ post.post_image.url }}"
+            class="h-100 w-100 rounded-2 object-fit-cover" />
+        </div>
+        {% endif %}
+      </a>
+
+      <!-- <br /> -->
+      <!-- {{ post.created_at }} by @{{ post.user.username }} <br /> -->
+
+      <!-- <i class="bi bi-hand-thumbs-up"> {{ post.number_of_likes }}</i>
+          <i class="bi bi-heart"> {{ post.number_of_loves }}</i>
+          <i class="bi bi-chat-left-dots"> {{post.}} </i> <br />
+          <br /> -->
+
+      <div class="row mt-3">
+        <div class="col-4">
+          <!--for like or unlike-->
+          {% if user in post.likes.all %}
+          <a href="{% url 'post_like' post.id %}"
+            ><i class="bi bi-hand-thumbs-down"></i>
+            <!--Unlike-->
+          </a>
+          {% else %}
+          <a
+            href="{% url 'post_like' post.id %}"
+            style="text-decoration-line: blink"
+            ><i class="bi bi-hand-thumbs-up"></i>
+            <!--Like-->
+            <span>{{ post.number_of_likes }}</span>
+          </a>
+          {% endif %}
+        </div>
+        <div class="col-4">
+          <!--for love or hate-->
+          {% if user in post.loves.all %}
+          <a href="{% url 'post_love' post.id %}"
+            ><i class="bi bi-heartbreak" style="color: red"></i>
+            <!--Hate--></a
+          >
+          {% else %}
+          <a
+            href="{% url 'post_love' post.id %}"
+            style="text-decoration-line: blink"
+            ><i class="bi bi-heart" style="color: red"></i>
+            <!--Love-->
+            {{ post.number_of_loves }}
+          </a>
+          {% endif %}
+        </div>
+        <!-- <div class="col-3">
+                <a href="{% url 'post_share' post.id %}"
+                  ><i class="bi bi-share"></i> {{ post.id }}</a
+                >
+              </div> -->
+        <div class="col-4">
+          <a
+            href="{% url 'post_comments' post.id %}"
+            style="text-decoration-line: blink"
+            ><i class="bi bi-chat-left-dots"></i>
+            {{post.}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+
+  {% endfor %}
+  <a
+    href="{% url 'newpost' %}"
+    style="
+      height: 50px;
+      width: 50px;
+      border-radius: 100%;
+      border: 1px solid #da4b65;
+      background: #da4b65;
+      color: white;
+      margin-top: 10px;
+      padding-top: 10px;
+      position: fixed;
+      bottom: 85px;
+      right: 20px;
+      box-shadow: rgb(249 177 177 / 24%) 0px 5px 10px;
+    "
+    class="d-flex justify-content-center align-content-center shadow"
+    ><i class="bi bi-pen-fill"></i
+  ></a>
+</div>
+
+{% endblock %}

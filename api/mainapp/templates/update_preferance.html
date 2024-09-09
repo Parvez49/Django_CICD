@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+<h1 class="text-center">Update preference</h1>
+<br/>
+This is update preference page
+<div class="col-md-6 offset-md-3">
+    <h1>Update {{ request.user.username }}'s Preference</h1>
+
+    <form method="post" action="{% url 'update_preferance' %}">
+        {% csrf_token %}
+        <label for="preference">Preference Name:</label>
+        <input type="text" name="preference" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ preferenceForm.as_p }}
+        <br/>
+        <br/><br/>
+        <button type="submit" class="btn-outline-secondary">Update Preference</button>
+    <br/><br/>
+</div>
+</div>
+    
+{% endblock %}
