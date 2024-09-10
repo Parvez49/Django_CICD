@@ -18,10 +18,9 @@ class UserPost(BaseModelWithUID):
 
     def number_of_loves(self):
         return self.loves.count()
-    
+
     def number_of_share(self):
         return self.share.count()
-    
 
     def __str__(self):
         return f"Post by {self.user.fname} at {self.created_at}"
@@ -35,20 +34,21 @@ class UserPost(BaseModelWithUID):
 
 
 class PostFile(BaseModelWithUID):
-    post = models.ForeignKey(UserPost, related_name='files', on_delete=models.CASCADE)
-    file = models.FileField(upload_to='posts/files/')
+    post = models.ForeignKey(UserPost, related_name="files", on_delete=models.CASCADE)
+    file = models.FileField(upload_to="posts/files/")
 
     def __str__(self):
         return f"File for post {self.post.id} uploaded at {self.created_at}"
 
 
 class Comment(BaseModelWithUID):
-    post = models.ForeignKey(UserPost, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='user_comments', on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        UserPost, related_name="comments", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User, related_name="user_comments", on_delete=models.CASCADE
+    )
     body = models.TextField()
 
     def __str__(self):
         return f"Comment by {self.user} on {self.post}"
-
-
-    

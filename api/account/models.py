@@ -11,7 +11,7 @@ from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
-    phone_number =models.CharField(max_length=50,null=True,blank=True)
+    phone_number = models.CharField(max_length=50, null=True, blank=True)
     receive_message = models.BooleanField(default=False)
 
     fname = models.CharField(max_length=50, blank=True, null=True)
@@ -23,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     relationship = models.JSONField(null=True, blank=True)
     education_level = models.JSONField(null=True, blank=True)
     career_field = models.JSONField(null=True, blank=True)
-    income_range = models.JSONField(null=True,blank=True)
+    income_range = models.JSONField(null=True, blank=True)
     religious_status = models.JSONField(null=True, blank=True)
     political_views = models.JSONField(null=True, blank=True)
     smoke_status = models.JSONField(null=True, blank=True)
@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     communication_style = models.JSONField(null=True, blank=True)
     love_language = models.JSONField(null=True, blank=True)
     personality = models.JSONField(null=True, blank=True)
-    culture = models.JSONField(null=True, blank=True)    
+    culture = models.JSONField(null=True, blank=True)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -50,30 +50,29 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
-        }
-    
+        return {"refresh": str(refresh), "access": str(refresh.access_token)}
+
     @staticmethod
     def get_by_email_or_phone(email_or_phone):
         try:
-            return User.objects.get(Q(email=email_or_phone) | Q(phone_number=email_or_phone))
+            return User.objects.get(
+                Q(email=email_or_phone) | Q(phone_number=email_or_phone)
+            )
         except ObjectDoesNotExist:
             return None
-
-    
 
 
 class UserMedia(models.Model):
     MEDIA_TYPE_CHOICES = (
-        ('image', 'Image'),
-        ('video', 'Video'),
+        ("image", "Image"),
+        ("video", "Video"),
     )
 
-    user = models.ForeignKey(User, related_name='media_files', on_delete=models.CASCADE)
-    media_type = models.CharField(max_length=10, choices=MEDIA_TYPE_CHOICES, blank=True,null=True)
-    file = models.FileField(upload_to='user_file/')
+    user = models.ForeignKey(User, related_name="media_files", on_delete=models.CASCADE)
+    media_type = models.CharField(
+        max_length=10, choices=MEDIA_TYPE_CHOICES, blank=True, null=True
+    )
+    file = models.FileField(upload_to="user_file/")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

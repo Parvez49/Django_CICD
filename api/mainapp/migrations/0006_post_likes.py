@@ -7,14 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0005_remove_profile_profile_pic_profile_profile_image'),
+        ("mainapp", "0005_remove_profile_profile_pic_profile_profile_image"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='post',
-            name='likes',
-            field=models.ManyToManyField(blank=True, related_name='post_like', to=settings.AUTH_USER_MODEL),
+            model_name="post",
+            name="likes",
+            field=models.ManyToManyField(
+                blank=True, related_name="post_like", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

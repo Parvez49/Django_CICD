@@ -4,9 +4,11 @@ from .models import Profile, Post, Comment, UserPreference
 
 admin.site.unregister(Group)
 
+
 # profile info along with user
 class ProfileInLine(admin.StackedInline):
     model = Profile
+
 
 # class UserAdmin(admin.ModelAdmin):
 #     model = User

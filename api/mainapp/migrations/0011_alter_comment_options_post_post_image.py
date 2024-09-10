@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0010_alter_comment_id'),
+        ("mainapp", "0010_alter_comment_id"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='comment',
-            options={'ordering': ['-created_at']},
+            name="comment",
+            options={"ordering": ["-created_at"]},
         ),
         migrations.AddField(
-            model_name='post',
-            name='post_image',
-            field=models.ImageField(blank=True, null=True, upload_to='images/'),
+            model_name="post",
+            name="post_image",
+            field=models.ImageField(blank=True, null=True, upload_to="images/"),
         ),
     ]

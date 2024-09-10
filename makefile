@@ -42,6 +42,9 @@ test:
 lint:
 	$(PYTHON) -m flake8
 
+format:
+	$(POETRY) run black .
+
 # Collect static files
 collectstatic:
 	$(PYTHON) api/manage.py collectstatic --noinput

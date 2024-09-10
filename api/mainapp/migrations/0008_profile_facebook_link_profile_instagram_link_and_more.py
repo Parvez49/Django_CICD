@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0007_post_loves'),
+        ("mainapp", "0007_post_loves"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='facebook_link',
+            model_name="profile",
+            name="facebook_link",
             field=models.CharField(blank=True, max_length=100, null=True),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='instagram_link',
+            model_name="profile",
+            name="instagram_link",
             field=models.CharField(blank=True, max_length=100, null=True),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='linked_link',
+            model_name="profile",
+            name="linked_link",
             field=models.CharField(blank=True, max_length=100, null=True),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='profile_bio',
+            model_name="profile",
+            name="profile_bio",
             field=models.CharField(blank=True, max_length=500, null=True),
         ),
     ]
